@@ -50,18 +50,12 @@ class ToshibaAcFcuState:
     class EstiaWaterMode:
         @staticmethod
         def from_raw(raw: int) -> EstiaWaterMode:
-            logger.debug(f"Ask raw mode: {raw}")
+            logger.error(f"Ask raw mode: {raw}")
             return {
                 0x5: EstiaWaterMode.COOL,
                 0x6: EstiaWaterMode.HEAT,
                 0x0: EstiaWaterMode.NONE,
-                0x6: EstiaWaterMode.HEAT,
-                0x6: EstiaWaterMode.HEAT,
-                0x6: EstiaWaterMode.HEAT,
-                0x6: EstiaWaterMode.HEAT,
-                0x6: EstiaWaterMode.HEAT,
-                # AUTO is unknown value
-            }[raw]
+            }[1]
 
     class AcStatus:
         @staticmethod
