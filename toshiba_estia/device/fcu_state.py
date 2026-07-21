@@ -55,7 +55,10 @@ class ToshibaAcFcuState:
                 0x5: EstiaWaterMode.COOL,
                 0x6: EstiaWaterMode.HEAT,
                 0x0: EstiaWaterMode.NONE,
-            }[1]
+                0x1: EstiaWaterMode.HEAT,
+                0x2: EstiaWaterMode.HEAT,
+                0x3: EstiaWaterMode.HEAT,
+            }[raw]
 
     class AcStatus:
         @staticmethod
