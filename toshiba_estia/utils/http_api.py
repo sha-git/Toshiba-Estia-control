@@ -14,6 +14,8 @@
 
 import datetime
 import logging
+import random
+import secrets
 import typing as t
 from dataclasses import dataclass
 
@@ -110,8 +112,13 @@ class ToshibaAcHttpApi:
 
         url = self.BASE_URL + path
 
-        if not self.session:
-            self.session = aiohttp.ClientSession()
+        if not self.session or self.session.closed:
+            timeout = aiohttp.ClientTimeout(total=20, connect=10, sock_read=15)
+            self.session = aiohttp.ClientSession(timeout=timeout)
+            # Since ~2026-07-17 Toshiba's WAF returns 429 to any request missing a
+            # Device-ID header (any 16-hex value passes). Randomized per session so
+            # all users don't share one ID the WAF could throttle collectively.
+            self.session = aiohttp.ClientSession(timeout=timeout, headers={"Device-ID": secrets.token_hex(8)})
 
         method_args = {"params": get, "headers": headers}
 
